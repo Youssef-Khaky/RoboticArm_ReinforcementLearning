@@ -297,7 +297,7 @@ void ArmPlugin::onCollisionMsg(ConstContactsPtr &contacts)
 		return;
 
 	for (unsigned int i = 0; i < contacts->contact_size(); ++i)
-	{	printf("%i\n",contacts->contact_size());
+	{	//printf("%i\n",contacts->contact_size());
 		if( strcmp(contacts->contact(i).collision2().c_str(), COLLISION_FILTER) == 0 )//if doesnt contact the floor 
 			continue;
 
@@ -309,11 +309,12 @@ void ArmPlugin::onCollisionMsg(ConstContactsPtr &contacts)
 		/ DONE - Check if there is collision between the arm and object, then issue learning reward
 		/
 		*/
-		PropPlugin* prop = GetPropByName(PROP_NAME);
-		const math::Box& propBBox = prop->model->GetBoundingBox();
-		physics::LinkPtr gripper  = model->GetLink(GRIP_NAME);
-		const math::Box& gripBBox = gripper->GetBoundingBox();
-		bool collisionCheck = BoxDistance(gripBBox, propBBox) <= 0.15;
+		//PropPlugin* prop = GetPropByName(PROP_NAME);
+		//const math::Box& propBBox = prop->model->GetBoundingBox();
+		//physics::LinkPtr gripper  = model->GetLink(GRIP_NAME);
+		//const math::Box& gripBBox = gripper->GetBoundingBox();
+
+		bool collisionCheck = (contacts->contact(i).collision1() == "tube::tube_link::tube_collision" && contacts->contact(i).collision2() == "arm::gripperbase::gripper_link");
 		
 		
 		if (collisionCheck)
